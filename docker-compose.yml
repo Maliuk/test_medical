@@ -1,6 +1,10 @@
 services:
   php:
     image: yiisoftware/yii2-php:8.5-apache-latest
+    platform: linux/amd64
+    depends_on:
+      - db
+      - mongodb
     volumes:
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       - ./:/app:delegated
@@ -15,3 +19,18 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: yii2basic
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '3306:3306'
+
+  mongodb:
+    image: mongo:latest
+    restart: always
+    ports:
+      - '27017:27017'
