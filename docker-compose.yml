@@ -5,6 +5,8 @@ services:
     depends_on:
       - db
       - mongodb
+      - rabbitmq
+      - elasticsearch
     volumes:
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       - ./:/app:delegated
@@ -34,3 +36,22 @@ services:
     restart: always
     ports:
       - '27017:27017'
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  elasticsearch:
+    image: elasticsearch:8.13.4
+    restart: always
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - '9200:9200'

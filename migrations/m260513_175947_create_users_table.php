@@ -10,7 +10,7 @@ class m260513_175947_create_users_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function safeUp(): void
     {
         $this->createTable('{{%users}}', [
             'id' => $this->primaryKey(),
@@ -28,7 +28,7 @@ class m260513_175947_create_users_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function safeDown(): void
     {
         $this->dropTable('{{%users}}');
     }
