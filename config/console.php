@@ -3,11 +3,12 @@
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 $mongodb = require __DIR__ . '/mongodb.php';
+$elasticsearch = require __DIR__ . '/elasticsearch.php';
 
 $config = [
     'id' => 'basic-console',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'queue'],
     'controllerNamespace' => 'app\commands',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -24,10 +25,18 @@ $config = [
                     'class' => \yii\log\FileTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => \yii\log\FileTarget::class,
+                    'levels' => ['error', 'warning', 'info'],
+                    'categories' => ['import'],
+                    'logFile' => '@runtime/logs/import.log',
+                ],
             ],
         ],
         'db' => $db,
         'mongodb' => $mongodb,
+        'elasticsearch' => $elasticsearch,
+        'queue' => require __DIR__ . '/queue.php',
     ],
     'params' => $params,
     /*

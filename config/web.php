@@ -3,6 +3,7 @@
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 $mongodb = require __DIR__ . '/mongodb.php';
+$elasticsearch = require __DIR__ . '/elasticsearch.php';
 
 $config = [
     'id' => 'basic',
@@ -45,10 +46,18 @@ $config = [
                     'class' => \yii\log\FileTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => \yii\log\FileTarget::class,
+                    'levels' => ['error', 'warning', 'info'],
+                    'categories' => ['import'],
+                    'logFile' => '@runtime/logs/import.log',
+                ],
             ],
         ],
         'db' => $db,
         'mongodb' => $mongodb,
+        'elasticsearch' => $elasticsearch,
+        'queue' => require __DIR__ . '/queue.php',
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
