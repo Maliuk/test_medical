@@ -2,6 +2,9 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/test_db.php';
+$mongodb = require __DIR__ . '/mongodb.php';
+$elasticsearch = require __DIR__ . '/elasticsearch.php';
+$queue = require __DIR__ . '/queue.php';
 
 /**
  * Application configuration shared by all test types
@@ -19,6 +22,18 @@ return [
     'language' => 'en-US',
     'components' => [
         'db' => $db,
+        'mongodb' => [
+            'class' => 'yii\mongodb\Connection',
+            'dsn' => 'mongodb://localhost:27017/yii2basic_test',
+        ],
+        'elasticsearch' => [
+            'class' => 'yii\elasticsearch\Connection',
+            'nodes' => [
+                ['http_address' => 'localhost:9200'],
+            ],
+            'autodetectCluster' => false,
+        ],
+        'queue' => $queue,
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'messageClass' => \yii\symfonymailer\Message::class,
