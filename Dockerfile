@@ -8,6 +8,4 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-#RUN pecl install mongodb && \
-#    docker-php-ext-enable mongodb && \
-#    docker-php-ext-install sockets
+RUN docker-php-ext-install sockets
