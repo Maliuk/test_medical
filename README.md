@@ -15,17 +15,17 @@
 ## Розгортання проекту через Docker
 
 1. **Запустіть контейнери:**
-   ```bash
+```bash
    docker compose up -d
 ```
 
 2. **Встановіть залежності Composer:**
-   ```bash
+```bash
    docker compose exec php composer install
 ```
 
 3. **Запустіть міграції бази даних:**
-   ```bash
+```bash
    docker compose exec php php yii migrate --interactive=0
 ```
 
