@@ -16,18 +16,27 @@
 
 1. **Запустіть контейнери:**
    ```bash
-   docker-compose up -d
-   ```
+   docker compose up -d
+```
 
 2. **Встановіть залежності Composer:**
    ```bash
-   docker-compose exec php composer install
-   ```
+   docker compose exec php composer install
+```
 
 3. **Запустіть міграції бази даних:**
    ```bash
-   docker-compose exec php php yii migrate --interactive=0
-   ```
+   docker compose exec php php yii migrate --interactive=0
+```
+
+---
+
+## Запуск тестів
+
+Для запуску всіх тестів (Unit, Functional, Acceptance):
+```bash
+docker compose exec php composer tests
+```
 
 ---
 
@@ -38,23 +47,23 @@
 ### 1. Прямий імпорт (без черги)
 Дані обробляються послідовно в межах одного консольного процесу.
 ```bash
-docker-compose exec php php yii import/csv
+docker compose exec php php yii import/csv
 ```
 Або з вказанням іншого файлу:
 ```bash
-docker-compose exec php php yii import/csv custom_file.csv
+docker compose exec php php yii import/csv custom_file.csv
 ```
 
 ### 2. Імпорт через чергу (асинхронно)
 Команда розбиває файл на частини (чанки) та додає завдання в чергу RabbitMQ.
 ```bash
-docker-compose exec php php yii import/csv-queue
+docker compose exec php php yii import/csv-queue
 ```
 
 #### Запуск воркера для обробки черги
 Щоб завдання з черги почали виконуватися, необхідно запустити слухача:
 ```bash
-docker-compose exec php php yii queue/listen
+docker compose exec php php yii queue/listen
 ```
 *Рекомендується запускати в окремому вікні терміналу.*
 
@@ -80,17 +89,22 @@ docker-compose exec php php yii queue/listen
 
 - **Перегляд статистики ElasticSearch:**
   ```bash
-  docker-compose exec php php yii import/stats
+  docker compose exec php php yii import/stats
   ```
 
 - **Генерація звіту (Групування за регіоном та продуктом):**
   ```bash
-  docker-compose exec php php yii import/report
+  docker compose exec php php yii import/report
   ```
 
-- **Очищення індексу ElasticSearch:**
+- **Очищення даних:**
+  Очищення індексу ElasticSearch:
   ```bash
-  docker-compose exec php php yii import/clear
+  docker compose exec php php yii import/clear
+  ```
+  Очищення MongoDB (через контейнер):
+  ```bash
+  docker compose exec mongodb mongosh yii2basic --eval "db.invoices.drop()"
   ```
 
 ---
@@ -109,6 +123,6 @@ docker-compose exec php php yii queue/listen
 
 ## Корисні команди Docker
 
-- **Зупинити проект:** `docker-compose stop`
-- **Переглянути логи PHP:** `docker-compose logs -f php`
-- **Зайти в контейнер:** `docker-compose exec php bash`
+- **Зупинити проект:** `docker compose stop`
+- **Переглянути логи PHP:** `docker compose logs -f php`
+- **Зайти в контейнер:** `docker compose exec php bash`
