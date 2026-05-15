@@ -24,6 +24,7 @@ class ImportController extends Controller
         $filePath = Yii::getAlias('@app/' . $file);
         if (!file_exists($filePath)) {
             $this->stderr("File not found: {$filePath}\n");
+
             return ExitCode::UNSPECIFIED_ERROR;
         }
 
@@ -58,6 +59,7 @@ class ImportController extends Controller
         $filePath = Yii::getAlias('@app/' . $file);
         if (!file_exists($filePath)) {
             $this->stderr("File not found: {$filePath}\n");
+
             return ExitCode::UNSPECIFIED_ERROR;
         }
 
@@ -67,9 +69,11 @@ class ImportController extends Controller
         try {
             $jobsCount = $service->importCsvToQueue($filePath);
             $this->stdout("Done! {$jobsCount} jobs pushed to queue.\n");
+
             return ExitCode::OK;
         } catch (\Exception $e) {
             $this->stderr("Error: " . $e->getMessage() . "\n");
+
             return ExitCode::UNSPECIFIED_ERROR;
         }
     }
@@ -106,6 +110,7 @@ class ImportController extends Controller
 
             if (empty($reportData)) {
                 $this->stdout("No data available for report.\n");
+
                 return;
             }
 
@@ -133,6 +138,7 @@ class ImportController extends Controller
         if ($strLen >= $length) {
             return mb_substr($string, 0, $length - 3) . '...';
         }
+
         return $string . str_repeat(' ', $length - $strLen);
     }
 

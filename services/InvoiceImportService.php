@@ -300,6 +300,7 @@ class InvoiceImportService
 
         try {
             $collection->insert($data);
+
             return true;
         } catch (Exception $e) {
             if (str_contains($e->getMessage(), 'duplicate key error')) {

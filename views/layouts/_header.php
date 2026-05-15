@@ -18,6 +18,14 @@ $items = [
         'url' => ['/site/about'],
     ],
     [
+        'label' => 'Импорт CSV',
+        'url' => ['/import/index'],
+    ],
+    [
+        'label' => 'Отчет',
+        'url' => ['/import/report'],
+    ],
+    [
         'label' => 'Contact',
         'url' => ['/site/contact'],
     ],
