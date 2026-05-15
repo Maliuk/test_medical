@@ -1,6 +1,6 @@
 services:
   php:
-    image: yiisoftware/yii2-php:8.5-apache-latest
+    build: .
     platform: linux/amd64
     depends_on:
       - db
